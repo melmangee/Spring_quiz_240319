@@ -16,9 +16,27 @@
 			,`rentPrice`
 			,`createdAt`
 			,`updatedAt`
- 		FROM
- 			`real_estate`
- 		WHERE
- 			`id` = #{id}
+		FROM
+			`real_estate`
+		WHERE
+			`id`= #{id}
+ 	</select>
+ 	
+ 	<!-- 3강 1-2 -->
+ 	<select id="selectRealEstateList" parameterType="int" resultType="com.quiz.lesson03.domain.RealEstate">
+ 		SELECT
+ 			`id`
+			,`realtorId`
+			,`address`
+			,`area`
+			,`type`
+			,`price`
+			,`rentPrice`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`real_estate`
+		WHERE
+			`rentPrice` &lt; #{rentPrice}
  	</select>
  </mapper>
