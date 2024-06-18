@@ -117,10 +117,18 @@
  	<update id="updateRealEstateById" parameterType="map">
  		UPDATE `real_Estate`
  		SET
- 			`type` = '전세'
+ 			`type` = #{type}
  			,`price` = #{price} 
  			,`updatedAt` = NOW()
  		WHERE
  			`id` = #{id}
  	</update>
+ 	
+ 	<delete id="deleteRealEstateById" parameterType="int">
+ 		DELETE
+ 		FROM
+ 			`real_estate`
+ 		WHERE
+ 			`id`= #{id}
+ 	</delete>
  </mapper>
