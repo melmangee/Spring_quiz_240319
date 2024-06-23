@@ -43,10 +43,18 @@
 				<tr th:each="member : ${membership}">
 					<td th:text="${member.name}">이름</td>
 					<td th:text="${member.phoneNumber}">전화번호</td>
-					<td th:text="${member.grade}">등급</td>
-					<td th:text="|${member.point}P|">
-						<span></span>
+					<td>
+						<span th:text="${member.grade}" th:if="${member.grade == 'VIP'}" class="text-danger">등급</span>
+						<span th:text="${member.grade}" th:if="${member.grade == 'GOLD'}" class="text-warning">등급</span>
+						<span th:text="${member.grade}" th:unless="${member.grade == 'VIP'} or ${member.grade == 'GOLD'}">등급</span>
+						
 					</td>
+					
+					<td>
+						<span th:text="|${member.point}P|" th:if="${member.point >= 5000}" class="text-primary" >포인트</span>
+						<span th:text="|${member.point}P|" th:unless="${member.point >= 5000}" >포인트</span>
+					</td>
+				
 				</tr>
 			</tbody>
 		</table>
