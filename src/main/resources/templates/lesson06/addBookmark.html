@@ -10,38 +10,70 @@
 </head>
 <body>
 	<h1>즐겨찾기 추가하기</h1>
-	<form method="POST" action="/lesson06/add-bookmark">
-		<div class="form-group">
-			<label for="title">제목</label>
-			<input type="text" class="form-control" id="title" name="title">
-		</div>
-		<div class="form-group">
-			<label for="address">주소</label>
-			<input type="text" class="form-control" id="address" name="address">
-		</div>
-		<input type="button" id="joinBtn" class="btn btn-success form-control" value="추가">
-	</form>
+	<div>
+		<label>제목</label>
+		<input type="text" id="name" class="form-control">
+	</div>
+	<div>
+		<label>주소</label>
+		<input type="text" id="url" class="form-control">
+	</div>
+	<input type="button" id="addBtn" class="btn btn-success form-control" value="추가">
 	
 	<script>
-		$(document).ready(function(){
-			$("#joinBtn").on('click',function(){
+		$(document).ready(function() {
+			$("#addBtn").on('click', function(){
+				//alert("클릭");
+			
+				// validation
+			let name = $("#name").val().trim();
+			if (!name) {
+				alert("사이트명을 입력하세요");
+				return;
+			}
+			
+			let url = $("#url").val().trim();
+			if (!url) {
+				alert("주소를 입력하세요");
+				return;
+			}
+			
+			// http도 아니고 https도 아니면 => alert
+			
+			if (url.startsWith("http://") == false && url.startsWith("https://") == false) {
+				alert("주소를 형식이 잘못되었습니다.");
+				return;
+			} 
 				
-				let title = $("#title").val().trim();
-				if (!title){
-					alert("제목을 입력해주세요");
-					return;
+			//alert("확인");
+			console.log(name);
+			console.log(url);
+			
+			// AJAX 통신 => 서버 요청
+			
+			$.ajax({
+				// request
+				type:"POST"
+				,url:"/lesson06/add-bookmark"
+				,data:{"name":name , "url":url}
+				
+				// response
+				// call back 함수
+				, success:function(data) { // date: JSON String -> jquery ajax 함수가 parsing => js dictionary
+					// {"code":200, "result":"성공"}
+					if (data.result == "성공") {
+						// 목록 화면으로 이동 - GET Method 요청
+						location.href = "/lesson06/bookmark-list-view";
+					}
+				}
+				, error:function(xhr, status, error) {
+					alert("데이터를 추가하는데 실패했습니다.");
 				}
 				
-				let address = $("#address").val().trim();
-				if (!address){
-					alert("주소를 입력해주세요");
-					return;
-				
-				}
-				
-				alert("확인");
-			});
-		});
+			}); // ajax 통신
+		
+			}); // join click
+		}); // ready 함수
 	</script>
 </body>
 </html>
