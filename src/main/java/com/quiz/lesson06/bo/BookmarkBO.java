@@ -13,16 +13,29 @@ public class BookmarkBO {
 	
 	@Autowired
 	private BookmarkMapper bookmarkMapper;
-	
-	//input: X
+
+	// input: X
 	// output: List<Bookmark>
 	public List<Bookmark> getBookmarkList() {
 		return bookmarkMapper.selectBookmarkList();
 	}
 	
-	// input: name. url
+	// input: name, url
 	// output: X
-	public void addBookMark(String name, String url) {
-		bookmarkMapper.insertBookMark(name, url);
+	public void addBookmark(String name, String url) {
+		bookmarkMapper.insertBookmark(name, url);
+	}
+	
+	// input: url
+	// output: boolean
+	public boolean isDuplicationUrl(String url) {
+		// 중복 [bookmark1, bookmark2] true        중복 아님: [] false
+		List<Bookmark> bookmarkList = bookmarkMapper.selectBookmarkListByUrl(url);
+		return bookmarkList.isEmpty() ? false : true;
+		//return !bookmarkList.isEmpty();
+	}
+	
+	public int deleteBookmarkById(int id) {
+		return bookmarkMapper.deleteBookmarkById(id);
 	}
 }

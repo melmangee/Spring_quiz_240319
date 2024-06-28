@@ -9,10 +9,16 @@ import com.quiz.lesson06.domain.Bookmark;
 
 @Mapper
 public interface BookmarkMapper {
-	
+
 	public List<Bookmark> selectBookmarkList();
 	
-	public void insertBookMark(
+	public void insertBookmark(
 			@Param("name") String name, 
 			@Param("url") String url);
+	
+	// input:url
+	// output:List<Bookmark>
+	public List<Bookmark> selectBookmarkListByUrl(String url);
+	
+	public int deleteBookmarkById(int id);
 }
