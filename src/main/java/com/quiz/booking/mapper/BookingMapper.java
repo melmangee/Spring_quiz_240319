@@ -8,5 +8,8 @@ import com.quiz.booking.domain.Booking;
 
 @Mapper
 public interface BookingMapper {
+	
 	public List<Booking> selectBooking();
+	
+	public int deleteBookingById(int id);
 }

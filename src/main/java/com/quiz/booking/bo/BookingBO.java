@@ -10,11 +10,15 @@ import com.quiz.booking.mapper.BookingMapper;
 
 @Service
 public class BookingBO {
-	
+
 	@Autowired
 	private BookingMapper bookingMapper;
 	
 	public List<Booking> getBooking() {
 		return bookingMapper.selectBooking();
+	}
+	
+	public int deleteBookingById(int id) {
+		return bookingMapper.deleteBookingById(id);
 	}
 }
