@@ -40,13 +40,17 @@
 	            <tbody>
 	            	<tr th:each="booking : ${bookingList}">
 	            		<td th:text="${booking.name}"></td>
-	            		<td th:text="${booking.date}"></td>
+	            		<td th:text="${#temporals.format(booking.date, 'yyyy년 M월 d일')}"></td>
 	            		<td th:text="${booking.day}"></td>
 	            		<td th:text="${booking.headcount}"></td>
 	            		<td th:text="${booking.phoneNumber}"></td>
-	            		<td th:text="${booking.state}"></td>
 	            		<td>
-	            			<button type="button" class="del-btn btn btn-danger" th:data-booking-id ="${booking.id}">삭제</button>
+	            			<span th:if="${booking.state == '대기중'}" class="text-info" th:text="${booking.state}"></span>
+	            			<span th:if="${booking.state == '확정'}" class="text-success" th:text="${booking.state}"></span>
+	            			<span th:if="${booking.state == '취소'}" class="text-danger" th:text="${booking.state}"></span>
+	            		</td>
+	            		<td>
+	            			<button type="button" class="del-btn btn btn-danger" th:text="'삭제'" th:data-booking-id ="${booking.id}"></button>
 	            		</td>
 	            	</tr>
 	            </tbody>
@@ -63,9 +67,9 @@
 	
 	<script>
 		$(document).ready(function(){
-			$(".del-btn").on('click',function(e){
+			$(".del-btn").on('click',function() {
 				let id = $(this).data("booking-id");
-				alert(id);
+				//alert(id);
 				
 				$.ajax({
 					
@@ -79,14 +83,16 @@
 					, success:function(data) {
 						if (data.code == 200) {
 							// 성공
-						location.reload(true); // 새로고침
+							alert("삭제되었습니다.")
+							location.reload(true); // 새로고침
 						} else if (data.code == 500) {
 							// 로직상 실패
+							//{"code":500 , "error_message":"에러의 원인"}
 							alert(data.error_message);
 						} 
 					}
 					, error:function(error) {
-						alert("삭제하는데 실패했습니다.");
+						alert("삭제하는데 실패했습니다. 관리자에게 문의해 주세요.");
 					}
 					
 				});

@@ -3,7 +3,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
  <mapper namespace="com.quiz.booking.mapper.BookingMapper">
- 	<select id="selectBooking" resultType="com.quiz.booking.domain.Booking">
+ 	<select id="selectBookingList" resultType="com.quiz.booking.domain.Booking">
 	 	SELECT
 	 		`id`
 			,`name`
@@ -25,4 +25,46 @@
  		WHERE
  			`id` = #{id}
  	</delete>
+ 	
+ 	<insert id="insertBooking" parameterType="map">
+ 		INSERT INTO `booking`
+ 		(
+ 			`name`
+			,`headcount`
+			,`day`
+			,`date`
+			,`phoneNumber`
+			,`state`
+			,`createAt`
+			,`updatedAt`
+ 		)
+ 		VALUES
+ 		(
+ 			#{name}
+ 			,#{headcount}
+ 			,#{day}
+ 			,#{date}
+ 			,#{phoneNumber}
+ 			, '대기중'
+ 			,NOW()
+ 			,NOW()
+ 		)
+ 	</insert>
+ 	
+ 	<select id="selectBookingByNamePhoneNumber" parameterType="map" resultType="com.quiz.booking.domain.Booking">
+ 		SELECT
+	 		`id`
+			,`name`
+			,`headcount`
+			,`day`
+			,`date`
+			,`phoneNumber`
+			,`state`
+			,`createAt`
+			,`updatedAt`
+		FROM
+			`booking`
+		WHERE
+			`name` = #{name} and `phoneNumber` = #{phoneNumber}
+ 	</select>
  </mapper>
