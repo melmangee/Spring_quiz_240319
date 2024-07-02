@@ -108,17 +108,20 @@ public class BookingController {
 		@RequestParam("phoneNumber") String phoneNumber) {
 		
 	// DB select 조회
-	// List<Booking> bookingList = bookingBO.getBookingByNamePhoneNumber(name, phoneNumber);	
+	 Booking booking = bookingBO.getLatestBookingByNamePhoneNumber(name, phoneNumber);	
 		
 	// json 응답
 	Map<String, Object> result = new HashMap<>();
-//	if () {
-//		result.put("code", 200);
-//		result.put("result", "성공");
-//	} else {
-//		result.put("code", 500);
-//		result.put("result", "실패");
-//	}
+	if (booking != null) {
+		// {"code":200, "result":booking 객체}
+		// {"code":200, "result":"id":3, "name":"신보람"....}
+		result.put("code", 200);
+		result.put("result", booking);
+	} else {
+		// {"code":500, "error_message":"예약 내역이 없습니다."}
+		result.put("code", 500);
+		result.put("error_message", "예약 내역이 없습니다.");
+	}
 		return result;
 	
 	}
