@@ -28,7 +28,6 @@ import lombok.ToString;
 public class RecruitEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	private int id;
 	
 	@Column(name = "companyId")
